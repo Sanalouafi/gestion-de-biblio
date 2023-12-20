@@ -1,0 +1,182 @@
+body {
+    background-image: url('../../public/images/books.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+header {
+    background-color: #001524 !important;
+}
+
+.sign-login-section {
+    padding: 10vw;
+    gap: 3vw;
+    background-color: rgb(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+
+}
+
+
+.title-area {
+    width: 50%;
+}
+
+.title-area h1 {
+    color: white;
+    font-weight: bold;
+    line-height: 10vh;
+}
+
+.form-area {
+    background-color: white;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    width: 40vw;
+    border: none;
+    border-radius: 30px;
+}
+
+.form-area h1 {
+    font-weight: bold;
+}
+
+.sign-form,
+.login-form {
+    gap: 3vh;
+    margin-bottom: 3vh;
+    padding: 3vh;
+}
+
+.sign-form input::placeholder,
+.login-form input::placeholder {
+    padding-left: 10px;
+}
+
+.nameInput,
+.lastnameInput,
+.mailinput,.user-role,
+.pswd-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+
+}
+.user-role{
+    align-items: start;
+}
+ 
+
+
+.sign-form input,
+.login-form input,.user-role select {
+    border: none;
+    box-shadow: inset 0px 5px 10px 0px rgba(121, 122, 122, 0.7);
+    border-radius: 10px;
+    width: 25vw;
+    height: 5vh;
+}
+
+#signbtn,
+#loginbtn {
+    width: 10vw;
+    background-color: #397643;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+span.php-errors {
+    color: red;
+    font-size: 15px;
+}
+
+.errmsg {
+    color: red;
+    font-size: 15px;
+    display: none;
+}
+
+#link-login,
+#link-sign {
+    cursor: pointer;
+}
+
+/********forms**********/
+.login-section {
+    display: none;
+}
+
+.desactiveForm {
+    display: none;
+}
+
+.activeForm {
+    display: flex;
+    /* flex-direction: column;
+	align-items: center;
+	padding-bottom: 5vh;
+	background-color: #FBF5F1;
+	width: 40vw;
+	border-radius: 15px; */
+}
+
+/*****foter section******/
+.footer-section footer {
+    background-color: #001524;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    height: fit-content;
+}
+
+.row,
+.col .nav-link {
+    color: white;
+}
+
+.sous-logo {
+    font-size: 12px;
+}
+
+@media screen and (max-width:992px) {
+    #navbarCollapse {
+        text-align: center;
+    }
+
+    #lastElementInNavbar {
+        margin-top: 1rem;
+    }
+
+    .sign-login-section {
+        flex-direction: column;
+    }
+
+    .form-area {
+        width: 60vw;
+
+    }
+
+    .sign-form input,
+    .login-form input {
+
+        width: 45vw;
+        height: 5vh;
+    }
+
+    .title-area h1 {
+        font-size: 5vh;
+    }
+
+    .title-area {
+        width: 90%;
+    }
+
+    #loginbtn,
+    #signbtn {
+        width: 40vw;
+    }
+
+
+
+}
