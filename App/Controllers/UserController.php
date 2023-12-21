@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-include '../../vendor/autoload.php';
+include __DIR__.'/../../vendor/autoload.php';
 
 use App\Models\User;
 
@@ -33,7 +33,7 @@ class UserController
     {
         switch ($role) {
             case 1:
-                echo "admin";
+                header("Location:../../views/admin/dashboard.php");
                 exit();
             case 2:
                 echo "user";

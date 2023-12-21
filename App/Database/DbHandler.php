@@ -1,6 +1,6 @@
 <?php
 namespace App\Database;
-include '../../vendor/autoload.php';
+include __DIR__.'/../../vendor/autoload.php';
 
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();

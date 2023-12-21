@@ -27,6 +27,7 @@ CREATE TABLE book(
     author VARCHAR(50),
     genre VARCHAR(50),
     description VARCHAR(255),
+    photo VARCHAR(255),
     publication_year date,
     total_copie INT,
     avaible_copies INT

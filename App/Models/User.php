@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Models;
 
-include '../../vendor/autoload.php';
+include __DIR__ . '/../../vendor/autoload.php';
+
 use App\Database\DbHandler;
 
 session_start();
@@ -55,9 +57,59 @@ class User
             } else {
                 echo "Error adding user role";
             }
+        }
+    }
+    public function editUser($id, $fullname, $lastname, $email, $phone, $roleId)
+    {
+        $id = mysqli_real_escape_string($this->conn, $id);
+        $fullname = mysqli_real_escape_string($this->conn, $fullname);
+        $lastname = mysqli_real_escape_string($this->conn, $lastname);
+        $email = mysqli_real_escape_string($this->conn, $email);
+        $phone = mysqli_real_escape_string($this->conn, $phone);
+        $roleId = mysqli_real_escape_string($this->conn, $roleId);
 
-        } 
 
+        $query = "UPDATE user SET fullname='$fullname', lastname='$lastname', email='$email', phone='$phone' WHERE id=$id";
+        $result = mysqli_query($this->conn, $query);
+
+        if (!$result) {
+            echo "Error updating user: " . mysqli_error($this->conn);
+            return false;
+        }
+
+        $queryUpdateRole = "UPDATE user_role SET role_id=$roleId WHERE user_id=$id";
+        $resultUpdateRole = mysqli_query($this->conn, $queryUpdateRole);
+
+        if (!$resultUpdateRole) {
+            echo "Error updating user role: " . mysqli_error($this->conn);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function deleteUser($id)
+    {
+        $id = mysqli_real_escape_string($this->conn, $id);
+
+        $query = "DELETE FROM user WHERE id=$id";
+        $result = mysqli_query($this->conn, $query);
+
+        if (!$result) {
+            echo "Error deleting user: " . mysqli_error($this->conn);
+            return false;
+        }
+
+        $queryUserRole = "DELETE FROM user_role WHERE user_id=$id";
+        $resultUserRole = mysqli_query($this->conn, $queryUserRole);
+
+        if (!$resultUserRole) {
+            echo "Error deleting user role: " . mysqli_error($this->conn);
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -107,12 +159,9 @@ class User
     {
         $email = $this->getEmail();
         $password = $this->getPassword();
-
-        // Basic validation
         $passwordError = $this->validatePassword($password);
 
         if (!empty($passwordError)) {
-            // Validation failed
             echo "Validation error: $passwordError";
             return false;
         }
@@ -134,6 +183,7 @@ class User
 
         if (password_verify($password, $row['password'])) {
             $_SESSION['role'] = $row['role_id'];
+            $_SESSION['name'] = $row['fullname'];
 
             return true;
         } else {
