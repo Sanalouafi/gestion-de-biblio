@@ -8,6 +8,24 @@ use App\Models\User;
 
 class UserController
 {
+
+    public function getAllUsers()
+    {
+        $user = new User('', '', '', '', '');
+        return $user->getAllUsers();
+    }
+
+    public function createUserWithRole($fullname, $lastname, $email, $password, $phone, $roleId)
+    {
+        $user = new User($fullname, $lastname, $email, $password, $phone);
+
+        if ($user->createUserWithRole($fullname, $lastname, $email, $password, $phone, $roleId)) {
+            header('Location:../../views/admin/user/showUsers.php');
+        } else {
+            echo "Error adding user with role !!";
+        }
+    }
+
     public function registerUser($fullname, $lastname, $email, $password, $phone)
     {
         $user = new User($fullname, $lastname, $email, $password, $phone);
@@ -45,6 +63,17 @@ class UserController
     }
 }
 
+if (isset($_POST['add_user_submit'])) {
+    $userController = new UserController();
+    $userController->createUserWithRole(
+        $_POST['fullname'],
+        $_POST['lastname'],
+        $_POST['email'],
+        '123456789',
+        $_POST['phone'],
+        $_POST['role']  
+    );
+}
 
 if (isset($_POST['sign_submit'])) {
     $userController = new UserController();

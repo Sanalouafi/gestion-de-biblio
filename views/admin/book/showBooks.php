@@ -67,6 +67,7 @@ $books = $bookController->getAllBooks();
                 <div class="navbar-nav w-100">
                     <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
+                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
 
                 </div>
 

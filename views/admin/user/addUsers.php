@@ -1,5 +1,12 @@
 <?php
 session_start();
+include __DIR__ . '/../../../vendor/autoload.php';
+
+use App\Controllers\RoleController;
+
+$roleController = new RoleController();
+$allRoles = $roleController->getAllRoles();
+
 ?>
 
 <!DOCTYPE html>
@@ -88,8 +95,8 @@ session_start();
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="showBooks.php" class="nav-item nav-link active "><i class="fa fa-tachometer-alt me-2"></i>Books</a>
-                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
+                    <a href="../book/showBooks.php" class="nav-item nav-link  "><i class="fa fa-tachometer-alt me-2"></i>Books</a>
+                    <a href="showUsers.php" class="nav-item nav-link active"><i class="fa fa-user me-2"></i>Users</a>
 
                 </div>
 
@@ -164,49 +171,39 @@ session_start();
                             <div class="bg-dark text-center rounded p-4">
 
                                 <div class="container d-flex justify-content-center" style="margin-top:5%;">
-                                    <form method="POST" action="../../../App/Controllers/BookController.php" enctype="multipart/form-data" style="width:50vw; min-width:300px;">
-                                        <div class="card">
-                                            <img src="../../../public/images/book.jpg" alt="image" id="image">
-                                            <label for="input-file">Choose Image</label>
-                                            <input type="file" accept="image/jpg , image/png , image/jpeg" id="input-file" name="photo" required>
-                                        </div>
+                                    <form method="POST" action="../../../App/Controllers/UserController.php" enctype="multipart/form-data" style="width:50vw; min-width:300px;">
+
                                         <div class="row mb-3">
                                             <div class="col">
-                                                <label class="form-label">Title</label>
-                                                <input type="text" class="form-control" name="title" placeholder="name of the book" required>
+                                                <label class="form-label">Full name:</label>
+                                                <input type="text" class="form-control" name="fullname" placeholder="Your Full name" required>
                                             </div>
 
                                             <div class="col">
-                                                <label class="form-label">author:</label>
-                                                <input type="text" class="form-control" name="author" placeholder="author" required>
+                                                <label class="form-label">Last name:</label>
+                                                <input type="text" class="form-control" name="lastname" placeholder="Your Last name" required>
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">genre:</label>
-                                            <input type="text" class="form-control" name="genre" placeholder="genre of the book" required>
+                                            <label class="form-label">email:</label>
+                                            <input type="text" class="form-control" name="email" placeholder="Your email" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">description:</label>
-                                            <input type="text" class="form-control" name="description" placeholder="description of the book" required>
+                                            <label class="form-label">phone:</label>
+                                            <input type="text" class="form-control" name="phone" placeholder="Your number phone" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">publication year:</label>
-                                            <input type="date" class="form-control" name="publication_year" placeholder="publication year" required>
+                                            <label class="form-label">Choose a role:</label>
+                                            <select name="role" class="form-select" required>
+                                                <?php foreach ($allRoles as $role) : ?>
+                                                    <option value="<?= $role->getId(); ?>"><?= $role->getName(); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col">
-                                                <label class="form-label">total copie:</label>
-                                                <input type="number" class="form-control" name="total_copie" placeholder="total copie" required>
-                                            </div>
 
-                                            <div class="col">
-                                                <label class="form-label">avaible copies:</label>
-                                                <input type="number" class="form-control" name="avaible_copies" placeholder="avaible copies" required>
-                                            </div>
-                                        </div>
 
                                         <div class="row ms-1 mt-4 justify-content-center">
-                                            <button type="submit" name="add_book_submit" class="btn btn-success col-3 me-3">Save changes</button>
+                                            <button type="submit" name="add_user_submit" class="btn btn-success col-3 me-3">Save changes</button>
                                             <a href="showBooks.php" class="btn btn-danger col-3">Cancel</a>
                                         </div>
 

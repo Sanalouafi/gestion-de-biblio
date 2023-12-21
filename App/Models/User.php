@@ -59,6 +59,45 @@ class User
             }
         }
     }
+
+    public function createUserWithRole($fullname, $lastname, $email, $password, $phone, $roleId)
+    {
+        $emailError = $this->validateEmail($email);
+        $fullnameError = $this->validateFullname($fullname);
+        $passwordError = $this->validatePassword($password);
+
+        if (!empty($emailError) || !empty($fullnameError) || !empty($passwordError)) {
+            echo "Validation error: $emailError $fullnameError $passwordError";
+            return false;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $queryUser = "INSERT INTO user (fullname, lastname, email, password, phone) VALUES ('$fullname', '$lastname', '$email', '$hashedPassword', '$phone')";
+        $resultUser = mysqli_query($this->conn, $queryUser);
+
+        if (!$resultUser) {
+            echo "Error creating user: " . mysqli_error($this->conn);
+            return false;
+        }
+
+        $userId = mysqli_insert_id($this->conn);
+
+        $queryUserRole = "INSERT INTO user_role (user_id, role_id) VALUES ($userId, $roleId)";
+        $resultUserRole = mysqli_query($this->conn, $queryUserRole);
+
+        if (!$resultUserRole) {
+            echo "Error assigning role to user: " . mysqli_error($this->conn);
+
+            $queryRollback = "DELETE FROM user WHERE id=$userId";
+            mysqli_query($this->conn, $queryRollback);
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function editUser($id, $fullname, $lastname, $email, $phone, $roleId)
     {
         $id = mysqli_real_escape_string($this->conn, $id);

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models;
-include __DIR__.'/../../vendor/autoload.php';
+
+include __DIR__ . '/../../vendor/autoload.php';
 
 use App\Database\DbHandler;
 
@@ -122,8 +123,8 @@ class Book
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
-            $query_delete="DELETE FROM reservation WHERE id = $id";
-            $result_delete= mysqli_query($this->conn, $query_delete);
+            $query_delete = "DELETE FROM reservation WHERE id = $id";
+            $result_delete = mysqli_query($this->conn, $query_delete);
 
             echo "Error deleting book: " . mysqli_error($this->conn);
             return false;
@@ -131,6 +132,24 @@ class Book
             return true;
         }
     }
+
+   
+
+    public function updateAvailableCopies($id, $newAvailableCopies)
+    {
+        $query = "UPDATE book SET avaible_copies=$newAvailableCopies WHERE id=$id";
+        $result = mysqli_query($this->conn, $query);
+
+        if (!$result) {
+            echo "Error updating available_copies in book table: " . mysqli_error($this->conn);
+            return false;
+        } else {
+            $this->setAvailableCopies($newAvailableCopies);
+            return true;
+        }
+    }
+
+
     public function setTitle($title)
     {
         $this->title = mysqli_real_escape_string($this->conn, $title);
