@@ -232,7 +232,17 @@ class User
         }
     }
 
+    public function logout()
+    {
+        $_SESSION['role'];
+        $_SESSION['user_id'];
+        $_SESSION['name'];
+        
+        session_destroy();
 
+        header("Location:../../views/auth/sign_login.php");
+        exit();
+    }
 
     public function getLastname()
     {

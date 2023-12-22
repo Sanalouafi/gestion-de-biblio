@@ -47,6 +47,12 @@ class UserController
         }
     }
 
+    public function logoutUser()
+    {
+        $user = new User('','','','','');
+        $user->logout();
+    }
+
     private function redirectUser($role)
     {
         switch ($role) {
@@ -93,4 +99,8 @@ if (isset($_POST['login_submit'])) {
         $_POST['login_email'],
         $_POST['login_pswd'],
     );
+}
+if (isset($_POST['logout_submit'])) {
+    $userController = new UserController();
+    $userController->logoutUser();
 }

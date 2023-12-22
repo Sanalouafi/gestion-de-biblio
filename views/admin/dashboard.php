@@ -115,7 +115,10 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="../../auth/logout.php" class="dropdown-item">Log Out</a>
+                            <form method="post"class="dropdown-item" action="../../App/Controllers/UserController.php">
+                                <input type="submit" name="logout_submit" value="LogOut" >
+                            </form>
+
                         </div>
                     </div>
                 </div>
