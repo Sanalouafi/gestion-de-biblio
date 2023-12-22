@@ -1,5 +1,13 @@
 <?php
+include __DIR__ . '/../../../vendor/autoload.php';
 session_start();
+
+
+use App\Controllers\ReservationController;
+
+$reservationController = new ReservationController();
+
+$reservations = $reservationController->getAllReservations();
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +30,8 @@ session_start();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="../../public/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../public/css/dashboard.css" rel="stylesheet">
+    <link href="../../../public/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../public/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -32,12 +40,17 @@ session_start();
             height: 10vh !important;
 
         }
+
+        #img img {
+            width: 40px;
+            height: 40px;
+        }
     </style>
     <div class="container-xxl position-relative bg-white d-flex p-0">
 
         <div class="sidebar pe-4 pb-3">
             <nav style="background: #28323A;" class="navbar bg-light navbar-light">
-                <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
+                <a href="../dashboard.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">DASHMIN</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -52,10 +65,10 @@ session_start();
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="book/showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
-                    <a href="user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
-                    <a href="reservation/show.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Reservation</a>
+                    <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
+                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
+                    <a href="show.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Reservation</a>
 
                 </div>
 
@@ -64,7 +77,6 @@ session_start();
 
 
         <div class="content">
-
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                 <a href="dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-home"></i></h2>
@@ -72,6 +84,9 @@ session_start();
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+
+
+
 
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
@@ -104,6 +119,7 @@ session_start();
                                 <h6 class="fw-normal mb-0">Profile updated</h6>
                                 <small>15 minutes ago</small>
                             </a>
+
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
@@ -115,91 +131,82 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="../../auth/logout.php" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
             </nav>
 
 
-            <div class="container-fluid pt-4 px-4" id="content-container">
-                <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h5 class="mb-0">$1234</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h5 class="mb-0">$1234</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h5 class="mb-0">$1234</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h5 class="mb-0">$1234</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-
-
+            <div class="container-fluid pt-4 px-4" id="content">
                 <div class="container-fluid pt-4 px-4">
                     <div class="row g-4">
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light text-center rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Worldwide Sales</h6>
-                                    <a href="">Show All</a>
-                                </div>
-                                <canvas id="myChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light text-center rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Salse & Revenue</h6>
-                                    <a href="">Show All</a>
-                                </div>
-                                <canvas id="lineChart"></canvas>
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="bg-dark text-center rounded p-4">
+
+                                <a href="addBooks.php" class="btn btn-success mb-3" data-aos="fade-down" data-aos-duration="1500">Add New</a>
+                                <table class="table table-hover text-center">
+                                    <thead class="table-dark">
+                                        <tr data-aos="fade-left" data-aos-duration="1500">
+                                            <th scope="col-6" data-aos="fade-left"> Cover</th>
+                                            <th scope="col-6" data-aos="fade-left"> Title</th>
+                                            <th scope="col-6" data-aos="fade-left"> Author</th>
+                                            <th scope="col-6" data-aos="fade-left"> reservation date</th>
+                                            <th scope="col-6" data-aos="fade-left"> return date</th>
+                                            <th scope="col-6" data-aos="fade-left"> Total copie</th>
+                                            <th scope="col-6" data-aos="fade-left"> Avaible copies</th>
+
+                                            <th scope="col-6" data-aos="fade-left">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody" data-aos="fade-right" data-aos-duration="1500">
+                                        <?php
+                                        foreach ($reservations as $reservation) {
+                                        ?>
+                                            <tr>
+                                                <td id="img"><img src="../<?= $reservation['photo'] ?>" alt="" srcset=""></td>
+                                                <td><?= $reservation['title'] ?></td>
+                                                <td><?= $reservation['author'] ?></td>
+                                                <td><?= $reservation['reservation_date'] ?></td>
+                                                <td><?= $reservation['return_date'] ?></td>
+                                                <td><?= $reservation['total_copie'] ?></td>
+                                                <td><?= $reservation['available_copies'] ?></td>
+                                                <td>
+                                                    <a href="#?id=<?= $reservation['id'] ?>" class="link-dark">
+                                                        <i class='bx bxs-pencil fs-5 me-3'></i>
+                                                    </a>
+                                                    <a href="../../../App/Controllers/BookController.php?action=delete&id=<?= $reservation['id'] ?>" class="link-danger" onclick="return confirm('Are you sure you want to delete this book?')">
+                                                        <i class='bx bxs-user-x fs-5'></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
-
-
-
         </div>
     </div>
-
     <!-- Content End -->
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="../../public/js/chart.min.js"></script>
-    <script src="../../public/js/dashboard.js"></script>
+    <script src="../../../public/js/chart.min.js"></script>
+    <script src="../../../public/js/dashboard.js"></script>
 </body>
 <script>
     var currentPage = window.location.href;
@@ -211,7 +218,15 @@ session_start();
             link.classList.add("active");
         }
     });
+    AOS.init();
+    // Sidebar Toggler
+    document
+        .querySelector(".sidebar-toggler")
+        .addEventListener("click", function() {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".content").classList.toggle("open");
+            return false;
+        });
 </script>
-
 
 </html>
