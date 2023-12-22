@@ -171,13 +171,13 @@ $allBooks = $bookController->getBookById();
 
                                 <div class="container d-flex justify-content-center" style="margin-top:5%;">
                                     <form method="POST" action="../../../App/Controllers/ReservationController.php" enctype="multipart/form-data" style="width:50vw; min-width:300px;">
-                                    <div class="col">
-                                                <input type="hidden" class="form-control" name="user_id" value="<?= $_SESSION['user_id'] ?>">
-                                            </div>    
-                                    <div class="mb-3">
+                                        <div class="col">
+                                            <input type="hidden" class="form-control" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="form-label">Choose a book:</label>
                                             <select name="book" class="form-select" required>
-                                                    <option value="<?= $allBooks['id']; ?>"><?= $allBooks['title']; ?></option>
+                                                <option value="<?= $allBooks['id']; ?>"><?= $allBooks['title']; ?></option>
                                             </select>
                                         </div>
 
@@ -188,7 +188,7 @@ $allBooks = $bookController->getBookById();
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">Return date:</label>
-                                                <input type="date" class="form-control" name="return_date" required max="<?php echo date('Y-m-d', strtotime('+15 days')); ?>">
+                                                <input type="date" class="form-control" name="return_date" id="return_date" required>
                                             </div>
                                         </div>
 
@@ -196,7 +196,7 @@ $allBooks = $bookController->getBookById();
 
                                         <div class="row ms-1 mt-4 justify-content-center">
                                             <button type="submit" name="add_reservation_submit" class="btn btn-success col-3 me-3">Save changes</button>
-                                            <a href="showBooks.php" class="btn btn-danger col-3">Cancel</a>
+                                            <a href="show.php" class="btn btn-danger col-3">Cancel</a>
                                         </div>
 
 
@@ -227,6 +227,7 @@ $allBooks = $bookController->getBookById();
 </body>
 <script>
     AOS.init();
+    
 </script>
 <script>
     // Sidebar Toggler
@@ -253,5 +254,6 @@ $allBooks = $bookController->getBookById();
         image.src = URL.createObjectURL(input.files[0]);
     }
 </script>
+
 
 </html>

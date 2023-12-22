@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Controllers;
-include __DIR__.'/../../vendor/autoload.php';
+
+include __DIR__ . '/../../vendor/autoload.php';
 
 use App\Models\Reservation;
-use App\Models\Book; 
+use App\Models\Book;
+
 class ReservationController
 {
     public function getAllReservations()
@@ -16,7 +18,7 @@ class ReservationController
 
     public function getUserReservations()
     {
-        $user_id=$_SESSION['user_id'];
+        $user_id = $_SESSION['user_id'];
         $reservationModel = new Reservation('', '', '', '', '', '');
         $reservations = $reservationModel->getUserReservation($user_id);
         return $reservations;
@@ -34,14 +36,14 @@ class ReservationController
         $bookModel = new Book('', '', '', '', '', '', '', '');
         $book = $bookModel->getBookById($book_id);
 
-        if (isset($book )&& $book['available_copies'] > 0) {
+        if (isset($book) && $book['available_copies'] > 0) {
             $newAvailableCopies = $book['available_copies'] - 1;
             $bookModel->updateAvailableCopies($book_id, $newAvailableCopies);
 
             $reservationModel = new Reservation($description, $reservation_date, $return_date, $is_returned, $book_id, $user_id);
 
             if ($reservationModel->addReservation()) {
-                return "Reservation added successfully!";
+                header("Location:../../views/user/reservation/show.php");
             } else {
                 $bookModel->updateAvailableCopies($book_id, $book['available_copies']);
 
@@ -89,17 +91,18 @@ class ReservationController
             return "Error deleting reservation!";
         }
     }
+
+    
 }
 
-if (isset($_POST['add_reservation_submit'])){
-$reservationController= new ReservationController();
-$reservation=$reservationController->addReservation(
-'reserved',
-$_POST['reservation_date'],
-$_POST['return_date'],
-0,
-$_POST['book'],
-$_POST['user_id']
-);
-
+if (isset($_POST['add_reservation_submit'])) {
+    $reservationController = new ReservationController();
+    $reservation = $reservationController->addReservation(
+        'reserved',
+        $_POST['reservation_date'],
+        $_POST['return_date'],
+        0,
+        $_POST['book'],
+        $_POST['user_id']
+    );
 }

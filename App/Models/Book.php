@@ -149,6 +149,23 @@ class Book
         }
     }
 
+    ///////search
+    public function searchBooks($searchQuery)
+{
+    $searchQuery = mysqli_real_escape_string($this->conn, $searchQuery);
+
+    $query = "SELECT * FROM book WHERE title LIKE '%$searchQuery%' OR author LIKE '%$searchQuery%' OR genre LIKE '%$searchQuery%'";
+    $result = mysqli_query($this->conn, $query);
+
+    if (!$result) {
+        echo "Error in query: " . mysqli_error($this->conn);
+        return false;
+    } else {
+        return $result;
+    }
+}
+
+
 
     public function setTitle($title)
     {

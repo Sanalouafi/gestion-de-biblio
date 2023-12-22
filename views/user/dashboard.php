@@ -83,7 +83,11 @@ $books = $bookController->getAllBooks();
                     <i class="fa fa-bars"></i>
                 </a>
 
+                <!-- AJAX search -->
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" style="color: white !important;" type="text" id="searchInput" onkeyup="search_cate()" placeholder="Enter search term">
 
+                </form>
 
 
                 <div class="navbar-nav align-items-center ms-auto">
@@ -173,7 +177,7 @@ $books = $bookController->getAllBooks();
                                                     <a href="#?id=<?= $book['id'] ?>" class="link-dark">
                                                         <i class='bx bxs-book fs-5 me-3'></i>
                                                     </a>
-                                                    <a href="reservation/reserver.php?id=<?= $book['id'] ?>" class="link-success" >
+                                                    <a href="reservation/reserver.php?id=<?= $book['id'] ?>" class="link-success">
                                                         <i class='fa fa-check fs-5'></i>
                                                     </a>
                                                 </td>
@@ -197,7 +201,23 @@ $books = $bookController->getAllBooks();
     </div>
     <!-- Content End -->
 
+<!-- Search-->
+<script>
+        function search_cate() {
+            var searchTerm = document.getElementById("searchInput").value;
 
+            // Make an AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Update the table with the search results
+                    document.getElementById("tableBody").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "search.php?searchTerm=" + searchTerm, true);
+            xhr.send();
+        }
+    </script>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

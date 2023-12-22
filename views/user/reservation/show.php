@@ -82,6 +82,7 @@ $reservations = $reservationController->getUserReservations();
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+                
 
 
 
@@ -151,7 +152,7 @@ $reservations = $reservationController->getUserReservations();
                                             <th scope="col-6" data-aos="fade-left"> Author</th>
                                             <th scope="col-6" data-aos="fade-left"> Reservation date</th>
                                             <th scope="col-6" data-aos="fade-left"> Return date</th>
-                                            <th scope="col-6" data-aos="fade-left">Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody id="tableBody" data-aos="fade-right" data-aos-duration="1500">
@@ -164,14 +165,7 @@ $reservations = $reservationController->getUserReservations();
                                                 <td><?= $reservation['author'] ?></td>
                                                 <td><?= $reservation['reservation_date'] ?></td>
                                                 <td><?= $reservation['return_date'] ?></td>
-                                                <td>
-                                                    <a href="#?id=<?= $reservation['id'] ?>" class="link-dark">
-                                                        <i class='bx bxs-book fs-5 me-3'></i>
-                                                    </a>
-                                                    <a href="reservation/reserver.php?id=<?= $reservation['id'] ?>" class="link-success" >
-                                                        <i class='fa fa-check fs-5'></i>
-                                                    </a>
-                                                </td>
+                                                
                                             </tr>
                                         <?php
                                         }

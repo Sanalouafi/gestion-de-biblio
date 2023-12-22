@@ -156,6 +156,7 @@ $reservations = $reservationController->getAllReservations();
                                             <th scope="col-6" data-aos="fade-left"> return date</th>
                                             <th scope="col-6" data-aos="fade-left"> Total copie</th>
                                             <th scope="col-6" data-aos="fade-left"> Avaible copies</th>
+                                            <th scope="col-6" data-aos="fade-left"> user name</th>
 
                                             <th scope="col-6" data-aos="fade-left">Action</th>
                                         </tr>
@@ -172,6 +173,7 @@ $reservations = $reservationController->getAllReservations();
                                                 <td><?= $reservation['return_date'] ?></td>
                                                 <td><?= $reservation['total_copie'] ?></td>
                                                 <td><?= $reservation['available_copies'] ?></td>
+                                                <td><?= $reservation['fullname'] ?></td>
                                                 <td>
                                                     <a href="#?id=<?= $reservation['id'] ?>" class="link-dark">
                                                         <i class='bx bxs-pencil fs-5 me-3'></i>

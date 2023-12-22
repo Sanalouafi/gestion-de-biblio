@@ -70,6 +70,13 @@ class BookController
             echo "Error deleting book !!";
         }
     }
+    public function searchBooks($searchQuery)
+    {
+        $book = new Book('', '', '', '', '', '', '', '');
+        $searchResults = $book->searchBooks($searchQuery);
+
+        return $searchResults;
+    }
 }
 
 if (isset($_POST['add_book_submit'])) {
