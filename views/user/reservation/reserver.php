@@ -225,9 +225,26 @@ $allBooks = $bookController->getBookById();
     <script src="../../../public/js/chart.min.js"></script>
     <script src="../../../public/js/dashboard.js"></script>
 </body>
+
 <script>
     AOS.init();
-    
+    document.addEventListener("DOMContentLoaded", function() {
+        var reservationDateInput = document.querySelector('input[name="reservation_date"]');
+        var returnDateInput = document.querySelector('input[name="return_date"]');
+        reservationDateInput.addEventListener('input', function() {
+            var maxReturnDate = new Date(reservationDateInput.value);
+            maxReturnDate.setDate(maxReturnDate.getDate() + 15);
+
+            returnDateInput.setAttribute('max', formatDate(maxReturnDate));
+        });
+
+        function formatDate(date) {
+            var yyyy = date.getFullYear();
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var dd = String(date.getDate()).padStart(2, '0');
+            return yyyy + '-' + mm + '-' + dd;
+        }
+    });
 </script>
 <script>
     // Sidebar Toggler
