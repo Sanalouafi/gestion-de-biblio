@@ -201,7 +201,7 @@ session_start();
 
                                             <div class="col">
                                                 <label class="form-label">avaible copies:</label>
-                                                <input type="number" class="form-control" name="avaible_copies" placeholder="avaible copies" required>
+                                                <input type="number" class="form-control" name="available_copies" placeholder="avaible copies" required>
                                             </div>
                                         </div>
 

@@ -54,7 +54,7 @@ class UserController
                 header("Location:../../views/admin/dashboard.php");
                 exit();
             case 2:
-                echo "user";
+                header("Location:../../views/user/dashboard.php");
                 exit();
             default:
                 echo "Unknown role";

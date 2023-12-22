@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../../vendor/autoload.php';
+include __DIR__ . '/../../vendor/autoload.php';
 session_start();
 
 
@@ -30,8 +30,8 @@ $books = $bookController->getAllBooks();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="../../../public/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../public/css/dashboard.css" rel="stylesheet">
+    <link href="../../public/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../public/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -61,13 +61,12 @@ $books = $bookController->getAllBooks();
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0"><?= $_SESSION['name'] ?></h6>
-                        <span>Admin</span>
+                        <span>User</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
-                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
+                    <a href="dashboard.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
+                    <a href="reservation/show.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>reservation</a>
 
                 </div>
 
@@ -144,7 +143,6 @@ $books = $bookController->getAllBooks();
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-dark text-center rounded p-4">
 
-                                <a href="addBooks.php" class="btn btn-success mb-3" data-aos="fade-down" data-aos-duration="1500">Add New</a>
                                 <table class="table table-hover text-center">
                                     <thead class="table-dark">
                                         <tr data-aos="fade-left" data-aos-duration="1500">
@@ -154,8 +152,7 @@ $books = $bookController->getAllBooks();
                                             <th scope="col-6" data-aos="fade-left"> Genre</th>
                                             <th scope="col-6" data-aos="fade-left"> Discription</th>
                                             <th scope="col-6" data-aos="fade-left"> Publication year</th>
-                                            <th scope="col-6" data-aos="fade-left"> Total copie</th>
-                                            <th scope="col-6" data-aos="fade-left"> Avaible copies</th>
+
 
                                             <th scope="col-6" data-aos="fade-left">Action</th>
                                         </tr>
@@ -165,20 +162,19 @@ $books = $bookController->getAllBooks();
                                         foreach ($books as $book) {
                                         ?>
                                             <tr>
-                                                <td id="img"><img src="../<?= $book['photo'] ?>" alt="" srcset=""></td>
-                                                <td><?= substr($book['title'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['author'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['genre'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['description'], 1, 10) . "...." ?></td>
+                                                <td id="img"><img src="<?= $book['photo'] ?>" alt="" srcset=""></td>
+                                                <td><?= $book['title'] ?></td>
+                                                <td><?= substr($book['author'], 0, 10) . "...." ?></td>
+                                                <td><?= $book['genre'] ?></td>
+                                                <td><?= substr($book['description'], 0, 10) . "...." ?></td>
                                                 <td><?= date('Y', strtotime($book['publication_year'])) ?></td>
-                                                <td><?= $book['total_copie'] ?></td>
-                                                <td><?= $book['available_copies'] ?></td>
+
                                                 <td>
-                                                    <a href="editBook.php?id=<?= $book['id'] ?>" class="link-dark">
-                                                        <i class='bx bxs-pencil fs-5 me-3'></i>
+                                                    <a href="#?id=<?= $book['id'] ?>" class="link-dark">
+                                                        <i class='bx bxs-book fs-5 me-3'></i>
                                                     </a>
-                                                    <a href="../../../App/Controllers/BookController.php?action=delete&id=<?= $book['id'] ?>" class="link-danger" onclick="return confirm('Are you sure you want to delete this book?')">
-                                                        <i class='bx bxs-user-x fs-5'></i>
+                                                    <a href="reservation/reserver.php?id=<?= $book['id'] ?>" class="link-success" >
+                                                        <i class='fa fa-check fs-5'></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -206,8 +202,8 @@ $books = $bookController->getAllBooks();
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="../../../public/js/chart.min.js"></script>
-    <script src="../../../public/js/dashboard.js"></script>
+    <script src="../../public/js/chart.min.js"></script>
+    <script src="../../public/js/dashboard.js"></script>
 </body>
 <script>
     var currentPage = window.location.href;

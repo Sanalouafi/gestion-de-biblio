@@ -210,7 +210,7 @@ $book = $bookController->getBookById();
 
                                             <div class="col">
                                                 <label class="form-label">avaible copies:</label>
-                                                <input type="number" class="form-control" name="avaible_copies" placeholder="avaible copies" value="<?= $book['avaible_copies'] ?>" required>
+                                                <input type="number" class="form-control" name="available_copies" placeholder="avaible copies" value="<?= $book['available_copies'] ?>" required>
                                             </div>
                                         </div>
 

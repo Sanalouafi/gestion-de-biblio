@@ -223,6 +223,7 @@ class User
         if (password_verify($password, $row['password'])) {
             $_SESSION['role'] = $row['role_id'];
             $_SESSION['name'] = $row['fullname'];
+            $_SESSION['user_id'] = $row['id'];
 
             return true;
         } else {

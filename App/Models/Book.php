@@ -78,7 +78,7 @@ class Book
         $totalCopies = $this->getTotalCopies();
         $availableCopies = $this->getAvailableCopies();
 
-        $query = "INSERT INTO book (title, author, genre, description, photo, publication_year, total_copie, avaible_copies) 
+        $query = "INSERT INTO book (title, author, genre, description, photo, publication_year, total_copie, available_copies) 
                   VALUES ('$title', '$author', '$genre', '$description', '$photo', '$publicationYear', $totalCopies, $availableCopies)";
 
         $result = mysqli_query($this->conn, $query);
@@ -104,7 +104,7 @@ class Book
 
         $query = "UPDATE book 
                   SET title='$title', author='$author', genre='$genre', description='$description', 
-                  photo='$photo', publication_year='$publicationYear', total_copie=$totalCopies, avaible_copies=$availableCopies 
+                  photo='$photo', publication_year='$publicationYear', total_copie=$totalCopies, available_copies=$availableCopies 
                   WHERE id = $id";
 
         $result = mysqli_query($this->conn, $query);
@@ -137,7 +137,7 @@ class Book
 
     public function updateAvailableCopies($id, $newAvailableCopies)
     {
-        $query = "UPDATE book SET avaible_copies=$newAvailableCopies WHERE id=$id";
+        $query = "UPDATE book SET available_copies=$newAvailableCopies WHERE id=$id";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {

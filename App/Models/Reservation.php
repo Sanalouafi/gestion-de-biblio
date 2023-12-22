@@ -99,33 +99,29 @@ class Reservation
     {
         $this->user_id = $user_id;
     }
-
-
     public function getAllReservations()
     {
-        $query = "SELECT * FROM reservation";
+        $query = "SELECT r.*, b.*,u.* FROM book AS b INNER JOIN reservation AS r ON b.id = r.book_id INNER JOIN user AS u ON r.user_id = u.id";
         $result = mysqli_query($this->conn, $query);
 
         if (!$result) {
             echo "Error in query: " . mysqli_error($this->conn);
             return false;
         } else {
-            $reservations = array();
+            return $result;
+        }
+    }
 
-            while ($row = mysqli_fetch_assoc($result)) {
-                $reservation = new Reservation(
-                    $row['description'],
-                    $row['reservation_date'],
-                    $row['return_date'],
-                    $row['is_returned'],
-                    $row['book_id'],
-                    $row['user_id']
-                );
-                $reservation->setId($row['id']);
-                $reservations[] = $reservation;
-            }
+    public function getUserReservation($user_id)
+    {
+        $query = "SELECT r.*, b.*,u.* FROM book AS b INNER JOIN reservation AS r ON b.id = r.book_id INNER JOIN user AS u ON r.user_id = u.id where user_id=$user_id";
+        $result = mysqli_query($this->conn, $query);
 
-            return $reservations;
+        if (!$result) {
+            echo "Error in query: " . mysqli_error($this->conn);
+            return false;
+        } else {
+            return $result;
         }
     }
 
@@ -173,8 +169,8 @@ class Reservation
     $bookModel = new Book('', '', '', '', '', '', '', '');
     $book = $bookModel->getBookById($book_id);
 
-    if ($book && $book['avaible_copies'] > 0) {
-        $newAvailableCopies = $book['avaible_copies'] - 1;
+    if ($book && $book['available_copies'] > 0) {
+        $newAvailableCopies = $book['available_copies'] - 1;
         $bookModel->updateAvailableCopies($book_id, $newAvailableCopies);
 
         $query = "INSERT INTO reservation (description, reservation_date, return_date, is_returned, book_id, user_id) 
@@ -187,7 +183,7 @@ class Reservation
         } else {
             echo "Error adding reservation: " . mysqli_error($this->conn);
 
-            $bookModel->updateAvailableCopies($book_id, $book['avaible_copies']);
+            $bookModel->updateAvailableCopies($book_id, $book['available_copies']);
 
             return false;
         }

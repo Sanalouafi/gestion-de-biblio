@@ -14,6 +14,13 @@ class ReservationController
         return $reservations;
     }
 
+    public function getUserReservations()
+    {
+        $user_id=$_SESSION['user_id'];
+        $reservationModel = new Reservation('', '', '', '', '', '');
+        $reservations = $reservationModel->getUserReservation($user_id);
+        return $reservations;
+    }
     public function getReservationById($id)
     {
         $reservationModel = new Reservation('', '', '', '', '', '');
@@ -27,7 +34,7 @@ class ReservationController
         $bookModel = new Book('', '', '', '', '', '', '', '');
         $book = $bookModel->getBookById($book_id);
 
-        if ($book && $book['available_copies'] > 0) {
+        if (isset($book )&& $book['available_copies'] > 0) {
             $newAvailableCopies = $book['available_copies'] - 1;
             $bookModel->updateAvailableCopies($book_id, $newAvailableCopies);
 
@@ -82,4 +89,17 @@ class ReservationController
             return "Error deleting reservation!";
         }
     }
+}
+
+if (isset($_POST['add_reservation_submit'])){
+$reservationController= new ReservationController();
+$reservation=$reservationController->addReservation(
+'reserved',
+$_POST['reservation_date'],
+$_POST['return_date'],
+0,
+$_POST['book'],
+$_POST['user_id']
+);
+
 }

@@ -30,7 +30,7 @@ CREATE TABLE book(
     photo VARCHAR(255),
     publication_year date,
     total_copie INT,
-    avaible_copies INT
+    available_copies INT
 );
 
 CREATE TABLE reservation(

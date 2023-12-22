@@ -3,11 +3,11 @@ include __DIR__ . '/../../../vendor/autoload.php';
 session_start();
 
 
-use App\Controllers\BookController;
+use App\Controllers\ReservationController;
 
-$bookController = new BookController();
+$reservationController = new ReservationController();
 
-$books = $bookController->getAllBooks();
+$reservations = $reservationController->getUserReservations();
 ?>
 
 <!DOCTYPE html>
@@ -61,13 +61,12 @@ $books = $bookController->getAllBooks();
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0"><?= $_SESSION['name'] ?></h6>
-                        <span>Admin</span>
+                        <span>User</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
-                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
+                    <a href="../dashboard.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
+                    <a href="show.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>reservation</a>
 
                 </div>
 
@@ -144,41 +143,33 @@ $books = $bookController->getAllBooks();
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-dark text-center rounded p-4">
 
-                                <a href="addBooks.php" class="btn btn-success mb-3" data-aos="fade-down" data-aos-duration="1500">Add New</a>
                                 <table class="table table-hover text-center">
                                     <thead class="table-dark">
                                         <tr data-aos="fade-left" data-aos-duration="1500">
                                             <th scope="col-6" data-aos="fade-left"> Cover</th>
-                                            <th scope="col-6" data-aos="fade-left"> Title</th>
+                                            <th scope="col-6" data-aos="fade-left"> Book Title</th>
                                             <th scope="col-6" data-aos="fade-left"> Author</th>
-                                            <th scope="col-6" data-aos="fade-left"> Genre</th>
-                                            <th scope="col-6" data-aos="fade-left"> Discription</th>
-                                            <th scope="col-6" data-aos="fade-left"> Publication year</th>
-                                            <th scope="col-6" data-aos="fade-left"> Total copie</th>
-                                            <th scope="col-6" data-aos="fade-left"> Avaible copies</th>
-
+                                            <th scope="col-6" data-aos="fade-left"> Reservation date</th>
+                                            <th scope="col-6" data-aos="fade-left"> Return date</th>
                                             <th scope="col-6" data-aos="fade-left">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableBody" data-aos="fade-right" data-aos-duration="1500">
                                         <?php
-                                        foreach ($books as $book) {
+                                        foreach ($reservations as $reservation) {
                                         ?>
                                             <tr>
-                                                <td id="img"><img src="../<?= $book['photo'] ?>" alt="" srcset=""></td>
-                                                <td><?= substr($book['title'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['author'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['genre'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['description'], 1, 10) . "...." ?></td>
-                                                <td><?= date('Y', strtotime($book['publication_year'])) ?></td>
-                                                <td><?= $book['total_copie'] ?></td>
-                                                <td><?= $book['available_copies'] ?></td>
+                                                <td id="img"><img src="../<?= $reservation['photo'] ?>" alt="" srcset=""></td>
+                                                <td><?= $reservation['title'] ?></td>
+                                                <td><?= $reservation['author'] ?></td>
+                                                <td><?= $reservation['reservation_date'] ?></td>
+                                                <td><?= $reservation['return_date'] ?></td>
                                                 <td>
-                                                    <a href="editBook.php?id=<?= $book['id'] ?>" class="link-dark">
-                                                        <i class='bx bxs-pencil fs-5 me-3'></i>
+                                                    <a href="#?id=<?= $reservation['id'] ?>" class="link-dark">
+                                                        <i class='bx bxs-book fs-5 me-3'></i>
                                                     </a>
-                                                    <a href="../../../App/Controllers/BookController.php?action=delete&id=<?= $book['id'] ?>" class="link-danger" onclick="return confirm('Are you sure you want to delete this book?')">
-                                                        <i class='bx bxs-user-x fs-5'></i>
+                                                    <a href="reservation/reserver.php?id=<?= $reservation['id'] ?>" class="link-success" >
+                                                        <i class='fa fa-check fs-5'></i>
                                                     </a>
                                                 </td>
                                             </tr>

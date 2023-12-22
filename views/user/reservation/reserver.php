@@ -1,13 +1,12 @@
 <?php
-include __DIR__ . '/../../../vendor/autoload.php';
 session_start();
-
+include __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Controllers\BookController;
 
 $bookController = new BookController();
+$allBooks = $bookController->getBookById();
 
-$books = $bookController->getAllBooks();
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +40,39 @@ $books = $bookController->getAllBooks();
 
         }
 
-        #img img {
-            width: 40px;
+        .card {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card img {
+            width: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .card label {
+            margin-top: 30px;
+            text-align: center;
             height: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .form-input-label,
+        .form-label {
+            color: white;
+
+        }
+
+        .card input {
+            display: none;
         }
     </style>
     <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -55,19 +84,18 @@ $books = $bookController->getAllBooks();
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="../../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                         </div>
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0"><?= $_SESSION['name'] ?></h6>
-                        <span>Admin</span>
+                        <span>User</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="showBooks.php" class="nav-item nav-link "><i class="fa fa-book me-2"></i>Books</a>
-                    <a href="../user/showUsers.php" class="nav-item nav-link "><i class="fa fa-user me-2"></i>Users</a>
+                    <a href="../dashboard.php" class="nav-item nav-link" id="dashboard-link"><i class="fa fa-tachometer-alt me-2"></i>book</a>
+                    <a href="show.php" class="nav-item nav-link active"><i class="fa fa-user me-2"></i>reservation</a>
 
                 </div>
 
@@ -84,9 +112,6 @@ $books = $bookController->getAllBooks();
                     <i class="fa fa-bars"></i>
                 </a>
 
-
-
-
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -96,7 +121,7 @@ $books = $bookController->getAllBooks();
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="../../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">User-name send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -125,7 +150,7 @@ $books = $bookController->getAllBooks();
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="../../../public/images/user.png" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex"><?= $_SESSION['name'] ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -144,72 +169,74 @@ $books = $bookController->getAllBooks();
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-dark text-center rounded p-4">
 
-                                <a href="addBooks.php" class="btn btn-success mb-3" data-aos="fade-down" data-aos-duration="1500">Add New</a>
-                                <table class="table table-hover text-center">
-                                    <thead class="table-dark">
-                                        <tr data-aos="fade-left" data-aos-duration="1500">
-                                            <th scope="col-6" data-aos="fade-left"> Cover</th>
-                                            <th scope="col-6" data-aos="fade-left"> Title</th>
-                                            <th scope="col-6" data-aos="fade-left"> Author</th>
-                                            <th scope="col-6" data-aos="fade-left"> Genre</th>
-                                            <th scope="col-6" data-aos="fade-left"> Discription</th>
-                                            <th scope="col-6" data-aos="fade-left"> Publication year</th>
-                                            <th scope="col-6" data-aos="fade-left"> Total copie</th>
-                                            <th scope="col-6" data-aos="fade-left"> Avaible copies</th>
+                                <div class="container d-flex justify-content-center" style="margin-top:5%;">
+                                    <form method="POST" action="../../../App/Controllers/ReservationController.php" enctype="multipart/form-data" style="width:50vw; min-width:300px;">
+                                    <div class="col">
+                                                <input type="hidden" class="form-control" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                                            </div>    
+                                    <div class="mb-3">
+                                            <label class="form-label">Choose a book:</label>
+                                            <select name="book" class="form-select" required>
+                                                    <option value="<?= $allBooks['id']; ?>"><?= $allBooks['title']; ?></option>
+                                            </select>
+                                        </div>
 
-                                            <th scope="col-6" data-aos="fade-left">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableBody" data-aos="fade-right" data-aos-duration="1500">
-                                        <?php
-                                        foreach ($books as $book) {
-                                        ?>
-                                            <tr>
-                                                <td id="img"><img src="../<?= $book['photo'] ?>" alt="" srcset=""></td>
-                                                <td><?= substr($book['title'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['author'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['genre'], 1, 10) . "...." ?></td>
-                                                <td><?= substr($book['description'], 1, 10) . "...." ?></td>
-                                                <td><?= date('Y', strtotime($book['publication_year'])) ?></td>
-                                                <td><?= $book['total_copie'] ?></td>
-                                                <td><?= $book['available_copies'] ?></td>
-                                                <td>
-                                                    <a href="editBook.php?id=<?= $book['id'] ?>" class="link-dark">
-                                                        <i class='bx bxs-pencil fs-5 me-3'></i>
-                                                    </a>
-                                                    <a href="../../../App/Controllers/BookController.php?action=delete&id=<?= $book['id'] ?>" class="link-danger" onclick="return confirm('Are you sure you want to delete this book?')">
-                                                        <i class='bx bxs-user-x fs-5'></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label class="form-label">Reservation date:</label>
+                                                <input type="date" class="form-control" name="reservation_date" required>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label">Return date:</label>
+                                                <input type="date" class="form-control" name="return_date" required max="<?php echo date('Y-m-d', strtotime('+15 days')); ?>">
+                                            </div>
+                                        </div>
 
 
+
+                                        <div class="row ms-1 mt-4 justify-content-center">
+                                            <button type="submit" name="add_reservation_submit" class="btn btn-success col-3 me-3">Save changes</button>
+                                            <a href="showBooks.php" class="btn btn-danger col-3">Cancel</a>
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
+
+
         </div>
+    </div>
     </div>
     <!-- Content End -->
 
 
-
-
+    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="../../../public/js/chart.min.js"></script>
     <script src="../../../public/js/dashboard.js"></script>
 </body>
 <script>
+    AOS.init();
+</script>
+<script>
+    // Sidebar Toggler
+    document
+        .querySelector(".sidebar-toggler")
+        .addEventListener("click", function() {
+            document.querySelector(".sidebar").classList.toggle("open");
+            document.querySelector(".content").classList.toggle("open");
+            return false;
+        });
     var currentPage = window.location.href;
 
     var navLinks = document.querySelectorAll(".navbar-nav .nav-link");
@@ -219,15 +246,12 @@ $books = $bookController->getAllBooks();
             link.classList.add("active");
         }
     });
-    AOS.init();
-    // Sidebar Toggler
-    document
-        .querySelector(".sidebar-toggler")
-        .addEventListener("click", function() {
-            document.querySelector(".sidebar").classList.toggle("open");
-            document.querySelector(".content").classList.toggle("open");
-            return false;
-        });
+    let image = document.getElementById("image");
+    let input = document.getElementById("input-file");
+
+    input.onchange = () => {
+        image.src = URL.createObjectURL(input.files[0]);
+    }
 </script>
 
 </html>

@@ -82,7 +82,7 @@ if (isset($_POST['add_book_submit'])) {
         $_FILES['photo']['name'],
         $_POST['publication_year'],
         $_POST['total_copie'],
-        $_POST['avaible_copies']
+        $_POST['available_copies']
     );
 }
 
@@ -97,7 +97,7 @@ if (isset($_POST['edit_book_submit'])) {
         $_FILES['photo']['name'],
         $_POST['publication_year'],
         $_POST['total_copie'],
-        $_POST['avaible_copies']
+        $_POST['available_copies']
     );
 }
 
